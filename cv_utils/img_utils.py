@@ -6,17 +6,9 @@ import numpy as np
 from scipy import ndimage
 from matplotlib import pyplot as plt
 
-from cv_utils.bbox import Box
+from cv_utils.constants import *
+from cv_utils import Box
 
-# useful/common colors
-COL_GRAY = [170, 170, 170]
-COL_WHITE = [255, 255, 255]
-COL_RED = [1, 1, 255]
-COL_GREEN = [1, 255, 1]
-COL_BLUE = [255, 1, 1]
-COL_YELLOW = [1, 255, 255]
-COL_CYAN = [255, 255, 1]
-COL_MAGENTA = [255, 1, 255]
 
 LABEL_COLORS = [COL_WHITE, COL_GREEN, COL_YELLOW, COL_MAGENTA]
 
@@ -202,7 +194,7 @@ def show_img(img, options=None):
         plt.imshow(img[:, :, ::-1])
 
 
-def imshow(*imgs, options=None):
+def imshow(*imgs, **options):
     """
     Plots multiple images using matplotlib
         by dynamically finding the required number of rows and cols.

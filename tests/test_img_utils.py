@@ -1,5 +1,6 @@
 import cv2 as cv
 
+import cv_utils
 from cv_utils import img_utils
 
 
@@ -32,6 +33,6 @@ def test_remove_empty():
 
 def test_add_bg():
     img = cv.imread('tests/resources/without-black-bg.jpg')
-    img_res = img_utils.add_bg(img, 50, img_utils.COL_YELLOW)
+    img_res = img_utils.add_bg(img, 50, cv_utils.COL_YELLOW)
     h, w, d = img.shape
     assert img_res.shape == (h + 2*50, w + 2*50, d)

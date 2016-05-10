@@ -27,3 +27,12 @@ def test_match_template_euclidean():
 def test_feature_match():
     hmap, scale = tm.feature_match(template, image, dict(feature='hog'))
     assert round(scale) == 8
+
+
+def test_multi_feat_match():
+    options = dict()
+    options['features'] = [dict(feature='hog'), dict(feature='rgb')]
+    hmap, scale = tm.multi_feat_match(template, image, options)
+
+    assert scale == 1
+    assert hmap.shape == image.shape[:2]

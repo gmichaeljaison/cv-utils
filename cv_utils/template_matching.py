@@ -4,8 +4,7 @@ import numpy as np
 import cv2 as cv
 import scipy.spatial
 
-from cv_utils import img_utils, feature_extractor as fe
-from cv_utils.bbox import Box
+from cv_utils import Box, img_utils, feature_extractor as fe
 
 
 _DEF_TM_OPT = dict(feature='rgb',
@@ -47,7 +46,7 @@ def multi_feat_match(template, image, options=None):
     h, w = image.shape[:2]
     scale = 1
     if options is not None and 'features' in options:
-        heatmap = np.zeros_like(image)
+        heatmap = np.zeros((h, w), dtype=np.float64)
         for foptions in options['features']:
             f_hmap, _ = feature_match(template, image, foptions)
             heatmap += cv.resize(f_hmap, (w, h), interpolation=cv.INTER_AREA)
@@ -171,10 +170,10 @@ def match_template_opencv(template, image, options):
 
     # make minimum peak heatmap
     if method not in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
-        if op['normalize']:
-            heatmap = 1 - heatmap
-        else:
-            heatmap = heatmap.max() - heatmap
+        heatmap = heatmap.max() - heatmap
+
+    if op['normalize']:
+        heatmap /= heatmap.max()
 
     # size
     if op['retain_size']:

@@ -3,7 +3,7 @@ import cv2 as cv
 
 import skimage.feature
 
-_DEF_HOG_OPTS = dict(cell_size=(8, 8), orientations=8, block_size=(1, 1), normalize=True)
+_DEF_HOG_OPTS = dict(cell_size=(8, 8), orientations=8, block_size=(1, 1))
 
 
 def factory(feature):
@@ -48,7 +48,6 @@ def hog(img, options=None):
                                  orientations=op['orientations'],
                                  pixels_per_cell=op['cell_size'],
                                  cells_per_block=op['block_size'],
-                                 normalise=op['normalize'],
                                  visualise=False)
     h, w = img.shape
 

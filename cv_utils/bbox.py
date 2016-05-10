@@ -2,7 +2,7 @@ from __future__ import division
 
 import math
 
-from cv_utils import img_utils
+from cv_utils.constants import *
 
 
 class Box(object):
@@ -244,7 +244,7 @@ class Label:
 
     def __init__(self, pos, text, angle=0, color=None):
         if color is None:
-            color = img_utils.COL_WHITE
+            color = COL_WHITE
         self.pos = pos
         self.text = text
         self.angle = angle
