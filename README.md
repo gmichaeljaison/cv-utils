@@ -9,6 +9,8 @@ A library of Computer Vision and OpenCV utility functions. It also includes basi
 ## Requirements:
 - Numpy
 - OpenCV
+- matplotlib
+- scipy, scikit-image
 
 ## Template Matching utils
 One drawback with OpenCV template matching module is that it is limited to RGB or similar 3-channel feature representations only. However, more meaningful representations like HOG or DeepNetwork features are represented with more number of channels.
@@ -62,3 +64,25 @@ image = cv.imread('tests/resources/sch-image.jpg')
 
 box, score = tm.match_one(template, image, dict(feature='rgb'))
 ```
+
+## Image Utilities
+#### Remove background
+```python
+img = cv.imread('tests/resources/with-bg.jpg')
+img_res = img_utils.remove_bg(img)
+```
+
+#### Add background with padding
+```python
+img = cv.imread('tests/resources/without-black-bg.jpg')
+img_res = img_utils.add_bg(img, 50, cv_utils.COL_YELLOW)
+```
+
+Please look at the img_utils file to know more about all the utility functions. Not all the features are covered in this doc.
+#### Other utility functions
+- collage (Constructs a collage of same-sized images with specified padding)
+- imshow  (matplotlib plotting for multiple images)
+- is_gray (Is gray-scale image)
+- add_rect (Add bounding box in an image)
+- add_text_img (Add text in an image)
+ 
