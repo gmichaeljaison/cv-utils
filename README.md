@@ -18,7 +18,7 @@ One drawback with OpenCV template matching module is that it is limited to RGB o
 ### Usage
 The package is pip installable. The easiest way to install is by using pip.
 
-``` $pip install specularity_removal ```
+``` $pip install cv_utils ```
 
 You can also download the git repo and install by running the below command.
 
