@@ -40,7 +40,9 @@ def max_pooling(matrix, pool_size):
 def min_pooling(matrix, pool_size):
     """ Applies min-pooling by negating the input matrix and using max-pooling function """
     matrix *= -1
-    return max_pooling(matrix, pool_size)
+    pool_res = max_pooling(matrix, pool_size)
+    pool_res *= -1
+    return pool_res
 
 
 def create_dirs(path):

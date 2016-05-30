@@ -168,6 +168,7 @@ def add_rect(img, box, color=None, thickness=1):
     if color is None:
         color = COL_GRAY
 
+    box = box.to_int()
     cv.rectangle(img, box.top_left(), box.bottom_right(), color, thickness)
 
 

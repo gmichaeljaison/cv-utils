@@ -225,6 +225,14 @@ class Box(object):
     def bottom_left(self):
         return self.x, self.y + self.height
 
+    def to_int(self):
+        """
+        Rounds off and converts (x,y,w,h) to int
+        :return: a Box object with all integer values
+        """
+        coord = [int(round(x)) for x in self.xy_coord()]
+        return self.from_xy(coord[0], coord[1], coord[2], coord[3])
+
     def __str__(self):
         return '(x: {0.x}, y: {0.y}, w: {0.width}, h: {0.height})'.format(self)
 
