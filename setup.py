@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='cv_utils',
     packages=['cv_utils'],
-    version='0.1.3',
+    version='0.1.4-dev',
     description='Computer Vision or OpenCV python utility functions. '
                 'It also includes basic utilities for image processing and '
                 'computer vision related tasks.',
