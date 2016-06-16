@@ -22,7 +22,7 @@ The package is pip installable. The easiest way to install is by using pip.
 
 You can also download the git repo and install by running the below command.
 
-``` $python setup.py ```
+``` $python setup.py install ```
 
 #### HOG template matching
 An example for template matching with HOG features. It returns both the heatmap and the scale factor by which the feature representation reduced the image dimension.
