@@ -4,11 +4,12 @@ import cv2 as cv
 import math
 import os
 import numpy as np
+import random
 from scipy import ndimage
 from matplotlib import pyplot as plt
 
 from cv_utils.constants import *
-from cv_utils import Box
+from cv_utils import Box, utils
 
 
 LABEL_COLORS = [COL_WHITE, COL_GREEN, COL_YELLOW, COL_MAGENTA]
@@ -219,13 +220,14 @@ def imshow(*imgs, **options):
     plt.show()
 
 
-def collage(imgs, size, padding=10):
+def collage(imgs, size, padding=10, bg=COL_BLACK):
     """
     Constructs a collage of same-sized images with specified padding.
 
     :param imgs: Array of images. Either 1d-array or 2d-array.
     :param size: (no. of rows, no. of cols)
     :param padding: Padding space between each image
+    :param bg: Background color for the collage. Default: Black
     :return: New collage
     """
     # make 2d array
@@ -236,7 +238,7 @@ def collage(imgs, size, padding=10):
     nrows, ncols = size
     nr, nc = nrows * h + (nrows-1) * padding, ncols * w + (ncols-1) * padding
 
-    res = np.zeros((nr, nc, 3), dtype=np.uint8)
+    res = np.ones((nr, nc, 3), dtype=np.uint8) * bg
 
     for r in range(nrows):
         for c in range(ncols):
@@ -256,6 +258,16 @@ def collage(imgs, size, padding=10):
     return res
 
 
+def repeat(img, size, padding=10, bg=COL_BLACK):
+    imgs = []
+    for _ in range(size[0]):
+        img_row = []
+        for _ in range(size[1]):
+            img_row.append(img)
+        imgs.append(img_row)
+    return collage(imgs, size, padding, bg)
+
+
 def is_gray(img):
     return len(img.shape) == 2
 
@@ -268,15 +280,45 @@ def gray3ch(img):
     return cv.cvtColor(img, cv.COLOR_GRAY2BGR) if is_gray(img) else img
 
 
-def each_img(imgs_dir):
-    fnames = os.listdir(imgs_dir)
-    for fname in fnames:
-        if not (fname.endswith('.jpg') or fname.endswith('.png') or fname.endswith('.bmp')):
-            continue
+def each_img(img_dir):
+    """
+    Reads and iterates through each image file in the given directory
+    """
+    for fname in utils.each_img(img_dir):
+        yield cv.imread(fname)
 
-        img_path = os.path.join(imgs_dir, fname)
-        img = cv.imread(img_path)
 
-        yield img, img_path
+def resize_max(img, max_side):
+    """
+    Resize the image to threshold the maximum dimension within max_side
+    :param img:
+    :param max_side: Length of the maximum height or width
+    :return:
+    """
+    h, w = img.shape[:2]
+    if h > w:
+        nh = max_side
+        nw = w * (nh / h)
+    else:
+        nw = max_side
+        nh = h * (nw / w)
 
+    return cv.resize(img, (nw, nh))
+
+
+def randomly_place(img, template):
+    h, w = img.shape[:2]
+    th, tw = template.shape[:2]
+    rand_r, rand_c = random.randrange(h - th), random.randrange(w - tw)
+    box = Box(rand_c, rand_r, tw, th)
+    set_img_box(img, box, template)
+    return box
+
+
+def contrast(img, alpha):
+    return cv.multiply(img, alpha)
+
+
+def brightness(img, alpha):
+    return cv.add(img, alpha)
 

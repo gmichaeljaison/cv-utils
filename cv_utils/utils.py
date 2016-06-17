@@ -68,3 +68,14 @@ def create_dirs(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
+
+def each_img(dir_path):
+    """
+    Iterates through each image in the given directory. (not recursive)
+    :param dir_path: Directory path where images files are present
+    :return: Iterator to iterate through image files
+    """
+    for fname in os.listdir(dir_path):
+        if fname.endswith('.jpg') or fname.endswith('.png') or fname.endswith('.bmp'):
+            yield fname
+
