@@ -15,6 +15,6 @@ setup(
     classifiers=[
         "Topic :: Utilities"
     ],
-    requires=['numpy', 'cv2', 'matplotlib', 'scipy', 'skimage', 'theano'],
+    requires=['numpy', 'cv2', 'matplotlib', 'scipy', 'skimage'],
     license='LICENSE.txt'
 )

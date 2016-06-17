@@ -1,12 +1,12 @@
 from __future__ import division
 
 import os
-
+"""
 import theano
 
 from theano import tensor
 from theano.tensor.signal import downsample as ds
-
+"""
 
 def remove_missing_keys(src_dict, target_dict):
     """
@@ -29,20 +29,26 @@ def max_pooling(matrix, pool_size):
     :param pool_size: pooling cell size
     :return: max-pooled output
     """
+    """
     t_input = tensor.dmatrix('input')
 
     pool_out = ds.max_pool_2d(t_input, pool_size, ignore_border=True)
     pool_f = theano.function([t_input], pool_out)
 
     return pool_f(matrix)
+    """
+    pass
 
 
 def min_pooling(matrix, pool_size):
     """ Applies min-pooling by negating the input matrix and using max-pooling function """
+    """
     matrix *= -1
     pool_res = max_pooling(matrix, pool_size)
     pool_res *= -1
     return pool_res
+    """
+    pass
 
 
 def create_dirs(path):
@@ -61,3 +67,4 @@ def create_dirs(path):
 
     if not os.path.exists(path):
         os.makedirs(path)
+

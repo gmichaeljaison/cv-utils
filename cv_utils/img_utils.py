@@ -2,6 +2,7 @@ from __future__ import division
 
 import cv2 as cv
 import math
+import os
 import numpy as np
 from scipy import ndimage
 from matplotlib import pyplot as plt
@@ -265,3 +266,17 @@ def gray3(img):
 
 def gray3ch(img):
     return cv.cvtColor(img, cv.COLOR_GRAY2BGR) if is_gray(img) else img
+
+
+def each_img(imgs_dir):
+    fnames = os.listdir(imgs_dir)
+    for fname in fnames:
+        if not (fname.endswith('.jpg') or fname.endswith('.png') or fname.endswith('.bmp')):
+            continue
+
+        img_path = os.path.join(imgs_dir, fname)
+        img = cv.imread(img_path)
+
+        yield img, img_path
+
+

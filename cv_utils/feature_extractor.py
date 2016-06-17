@@ -68,7 +68,7 @@ def gray(img, op=None):
 
 
 def lab(img, op=None):
-    return cv.cvtColor(img, cv.COLOR_BGR2Lab)
+    return cv.cvtColor(img, cv.COLOR_BGR2LAB)
 
 
 def luv(img, op=None):
