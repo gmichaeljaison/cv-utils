@@ -132,7 +132,7 @@ def add_text_img(img, text, pos, box=None, color=None, thickness=1, scale=1, ver
     text = str(text)
     top_left = pos
     if box is not None:
-        top_left = box.move(pos).top_left()
+        top_left = box.move(pos).to_int().top_left()
         if top_left[0] > img.shape[1]:
             return
 
@@ -154,6 +154,7 @@ def add_text_img(img, text, pos, box=None, color=None, thickness=1, scale=1, ver
         else:
             img[mask] = txt_img[mask]
     else:
+        print(top_left)
         cv.putText(img, text, top_left, cv.FONT_HERSHEY_PLAIN, scale, color, thickness)
 
 
@@ -238,7 +239,7 @@ def collage(imgs, size, padding=10, bg=COL_BLACK):
     nrows, ncols = size
     nr, nc = nrows * h + (nrows-1) * padding, ncols * w + (ncols-1) * padding
 
-    res = np.ones((nr, nc, 3), dtype=np.uint8) * bg
+    res = np.ones((nr, nc, 3), dtype=np.uint8) * np.array(bg, dtype=np.uint8)
 
     for r in range(nrows):
         for c in range(ncols):
@@ -285,7 +286,8 @@ def each_img(img_dir):
     Reads and iterates through each image file in the given directory
     """
     for fname in utils.each_img(img_dir):
-        yield cv.imread(fname)
+        fname = os.path.join(img_dir, fname)
+        yield cv.imread(fname), fname
 
 
 def resize_max(img, max_side):

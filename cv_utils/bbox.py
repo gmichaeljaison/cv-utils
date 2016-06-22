@@ -196,7 +196,7 @@ class Box(object):
         """
         x = round(x_percent * self.width)
         y = round(y_percent * self.height)
-        return x, y
+        return int(x), int(y)
 
     def move(self, point, reverse=False):
         """
