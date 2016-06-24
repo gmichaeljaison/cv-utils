@@ -1,9 +1,13 @@
 import numpy as np
 import cv2 as cv
 
+from cv_utils import DeepNet
+
 import skimage.feature
 
 _DEF_HOG_OPTS = dict(cell_size=(8, 8), orientations=8, block_size=(1, 1))
+
+_deepnet = None
 
 
 def factory(feature):
@@ -15,6 +19,8 @@ def factory(feature):
     """
     if feature == 'hog':
         return hog
+    elif feature == 'deep':
+        return deep
     elif feature == 'gray':
         return gray
     elif feature == 'lab':
@@ -27,6 +33,19 @@ def factory(feature):
         return hls
     else:
         return rgb
+
+
+def deep(img, op=None):
+    if op is None or op['prototxt'] is None or op['caffemodel'] is None:
+        raise Exception('Insufficient options. prototxt and caffemodel required')
+
+    global _deepnet
+    if _deepnet is None:
+        _deepnet = DeepNet(op['prototxt'], op['caffemodel'])
+
+    img_f = _deepnet.extract_feature(img, op['layer'])
+
+    return img_f
 
 
 def hog(img, options=None):

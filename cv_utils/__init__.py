@@ -1,4 +1,5 @@
 from .bbox import Box, ViewBox, Label
+from .deepnet import DeepNet
 from . import template_matching, img_utils, feature_extractor, utils
 from .constants import *
 
@@ -14,6 +15,7 @@ __all__ = [
     Box,
     ViewBox,
     Label,
+    DeepNet,
     'template_matching',
     'img_utils',
     'feature_extractor',

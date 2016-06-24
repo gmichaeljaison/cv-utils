@@ -154,7 +154,6 @@ def add_text_img(img, text, pos, box=None, color=None, thickness=1, scale=1, ver
         else:
             img[mask] = txt_img[mask]
     else:
-        print(top_left)
         cv.putText(img, text, top_left, cv.FONT_HERSHEY_PLAIN, scale, color, thickness)
 
 
@@ -323,4 +322,9 @@ def contrast(img, alpha):
 
 def brightness(img, alpha):
     return cv.add(img, alpha)
+
+
+def rot90(img):
+    img = img.transpose((1,0,2))
+    return cv.flip(img, 0)
 
