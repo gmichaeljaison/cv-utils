@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='cv_utils',
     packages=['cv_utils'],
-    version='0.1.4-dev',
+    version='0.1.4',
     description='Computer Vision or OpenCV python utility functions. '
                 'It also includes basic utilities for image processing and '
                 'computer vision related tasks.',
@@ -11,10 +11,10 @@ setup(
     author_email='gmichaeljaison@gmail.com, shreyasvj25@gmail.com',
     url='https://github.com/gmichaeljaison/cv-utils',
     download_url='https://github.com/gmichaeljaison/cv-utils/tarball/0.1',
-    keywords=['computer vision', 'image processing', 'utility', 'template matching'],
+    keywords=['computer vision', 'image processing', 'utility', 'template matching', 'deep networks'],
     classifiers=[
         "Topic :: Utilities"
     ],
-    requires=['numpy', 'cv2', 'matplotlib', 'scipy', 'skimage'],
+    requires=['numpy', 'cv2', 'matplotlib', 'scipy', 'scikit-image'],
     license='LICENSE.txt'
 )

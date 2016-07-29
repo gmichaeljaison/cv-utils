@@ -7,9 +7,7 @@ caffe.set_mode_gpu()
 
 class DeepNet:
     """
-        To represent a bounding box.
-
-        (x,y), width, and height
+    DeepNetwork model can be loaded and used to extract features from any layer for any input image.
     """
 
     def __init__(self, prototxt, model_path):
@@ -18,12 +16,14 @@ class DeepNet:
     def extract_feature(self, image, layer):
         """
         Passes image to a deepnet and extracts from the specified layer
+        
         :param image: opencv image
         :param layer: network layer name
         :return: extracted features
         """
 
         img = image.astype(np.float32)
+        # Substracting Image mean value
         img -= np.array((104.00698793, 116.66876762, 122.67891434))
 
         # make dims C x H x W for Caffe
