@@ -1,8 +1,6 @@
 import numpy as np
 
 import caffe
-caffe.set_device(0)
-caffe.set_mode_gpu()
 
 
 class DeepNet:
@@ -10,8 +8,11 @@ class DeepNet:
     DeepNetwork model can be loaded and used to extract features from any layer for any input image.
     """
 
-    def __init__(self, prototxt, model_path):
+    def __init__(self, prototxt, model_path, gpu = True, gpu_device_id = 0):
         self.net = caffe.Net(prototxt, model_path, caffe.TEST)
+        if gpu:
+            caffe.set_device(0)
+            caffe.set_mode_gpu()
 
     def extract_feature(self, image, layer):
         """

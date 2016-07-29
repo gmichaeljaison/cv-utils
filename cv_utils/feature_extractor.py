@@ -41,7 +41,7 @@ def deep(img, op=None):
 
     global _deepnet
     if _deepnet is None:
-        _deepnet = DeepNet(op['prototxt'], op['caffemodel'])
+        _deepnet = DeepNet(op['prototxt'], op['caffemodel'], op['gpu'], op['gpu_device_id'])
 
     img_f = _deepnet.extract_feature(img, op['layer'])
 
