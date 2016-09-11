@@ -176,8 +176,8 @@ class Box(object):
         :return: Array of tiny boxes
         """
         w, h = box_size
-        rows = round(self.height / h)
-        cols = round(self.width / w)
+        rows = int(round(self.height / h))
+        cols = int(round(self.width / w))
 
         boxes = []
         for row in range(rows):
