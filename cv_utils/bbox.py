@@ -83,9 +83,9 @@ class Box(object):
         x2, y2 = min(b1_x2, b2_x2), min(b1_y2, b2_y2)
         w, h = x2-x, y2-y
         if w <= 0 or h <= 0:
-            return None
-        else:
-            return Box(x, y, w, h)
+            w = 0
+            h = 0
+        return Box(x, y, w, h)
 
     @staticmethod
     def iou(box1, box2):

@@ -305,7 +305,7 @@ def resize_max(img, max_side):
         nw = max_side
         nh = int(h * (nw / w))
 
-    return cv.resize(img, (nw, nh))
+    return cv.resize(img, (int(nw), int(nh)))
 
 
 def randomly_place(img, template):
