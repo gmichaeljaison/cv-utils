@@ -230,11 +230,11 @@ def collage(imgs, size, padding=10, bg=COL_BLACK):
     :param bg: Background color for the collage. Default: Black
     :return: New collage
     """
-    # make 2d array
-    if not isinstance(imgs[0], list):
-        imgs = [imgs]
+    # make 1d array
+    if isinstance(imgs[0], list):
+        imgs = [img for im_list in imgs for img in im_list]
 
-    h, w = imgs[0][0].shape[:2]
+    h, w = imgs[0].shape[:2]
     nrows, ncols = size
     nr, nc = nrows * h + (nrows-1) * padding, ncols * w + (ncols-1) * padding
 
@@ -242,7 +242,8 @@ def collage(imgs, size, padding=10, bg=COL_BLACK):
 
     for r in range(nrows):
         for c in range(ncols):
-            img = imgs[r][c]
+            # img = imgs[r][c]
+            img = imgs[r * ncols + c]
 
             if is_gray(img):
                 img = gray3ch(img)
@@ -299,10 +300,10 @@ def resize_max(img, max_side):
     h, w = img.shape[:2]
     if h > w:
         nh = max_side
-        nw = w * (nh / h)
+        nw = int(w * (nh / h))
     else:
         nw = max_side
-        nh = h * (nw / w)
+        nh = int(h * (nw / w))
 
     return cv.resize(img, (nw, nh))
 
@@ -316,8 +317,24 @@ def randomly_place(img, template):
     return box
 
 
+def randomly_crop(img, size, num):
+    h, w = img.shape[:2]
+    dh, dw = size
+    yr, xr = h - dh, w - dw
+    if yr <= 0 or xr <= 0:
+        return
+
+    imgs = list()
+    for i in range(num):
+        y, x = random.randint(0, yr), random.randint(0, xr)
+        gen_img = img[y:y+dh, x:x+dw, :]
+        imgs.append(gen_img)
+    return imgs
+
+
 def contrast(img, alpha):
-    return cv.multiply(img, alpha)
+    alpha = float(alpha)
+    return cv.multiply(img, np.atleast_3d([alpha, alpha, alpha]))
 
 
 def brightness(img, alpha):

@@ -4,7 +4,7 @@
 
 07/29/2016
 
-* Adding `DeepNetwork` feature extraction utility. Requires caffe.
+* Added `DeepNetwork` feature extraction utility. Requires caffe.
 * Removed dependency on Theano module.
 * Added more utility functions.
 
