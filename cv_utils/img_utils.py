@@ -304,7 +304,7 @@ def resize_max(img, max_side):
         nw = max_side
         nh = h * (nw / w)
 
-    return cv.resize(img, (nw, nh))
+    return cv.resize(img, (int(nw), int(nh)))
 
 
 def randomly_place(img, template):
@@ -317,7 +317,8 @@ def randomly_place(img, template):
 
 
 def contrast(img, alpha):
-    return cv.multiply(img, alpha)
+    alpha = float(alpha)
+    return cv.multiply(img, np.atleast_3d([alpha, alpha, alpha]))
 
 
 def brightness(img, alpha):
