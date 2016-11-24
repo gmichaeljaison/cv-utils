@@ -67,6 +67,7 @@ def hog(img, options=None):
                                  orientations=op['orientations'],
                                  pixels_per_cell=op['cell_size'],
                                  cells_per_block=op['block_size'],
+                                 normalise=True,
                                  visualise=False)
     h, w = img.shape
 

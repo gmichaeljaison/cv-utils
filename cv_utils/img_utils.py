@@ -216,6 +216,7 @@ def imshow(*imgs, **options):
             if i >= n:
                 break
             plt.subplot(nrows, ncols, i+1)
+            plt.axis('off')
             show_img(imgs[i], options)
     plt.show()
 
