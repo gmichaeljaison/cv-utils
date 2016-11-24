@@ -218,7 +218,10 @@ def imshow(*imgs, **options):
             plt.subplot(nrows, ncols, i+1)
             plt.axis('off')
             show_img(imgs[i], options)
-    plt.show()
+            plt.axis('off')
+    plt.axis('off')
+    if 'noshow' not in options or not options['noshow']:
+        plt.show()
 
 
 def collage(imgs, size, padding=10, bg=COL_BLACK):
@@ -244,7 +247,11 @@ def collage(imgs, size, padding=10, bg=COL_BLACK):
     for r in range(nrows):
         for c in range(ncols):
             # img = imgs[r][c]
-            img = imgs[r * ncols + c]
+            idx = r * ncols + c
+            if idx >= len(imgs):
+                break
+
+            img = imgs[idx]
 
             if is_gray(img):
                 img = gray3ch(img)
@@ -280,6 +287,24 @@ def gray3(img):
 
 def gray3ch(img):
     return cv.cvtColor(img, cv.COLOR_GRAY2BGR) if is_gray(img) else img
+
+
+def normalize_img(img_mat, val_range=None):
+    """
+    Normalize numpy matrix to image data structure (0 - 255 of uint8).
+    http://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+
+    :param img_mat: Image numpy matrix
+    :param val_range: The expected range of the given matrix. Default: (min, max)
+    :return: Normalized uint8 matrix with range as (0, 255)
+    """
+    if val_range is None:
+        val_range = img_mat.min(), img_mat.max()
+
+    diff = val_range[1] - val_range[0]
+    img_mat = (img_mat - val_range[0]) * 255/diff
+    img_mat = img_mat.astype(np.uint8)
+    return img_mat
 
 
 def each_img(img_dir):
@@ -346,3 +371,9 @@ def rot90(img):
     img = img.transpose((1,0,2))
     return cv.flip(img, 0)
 
+
+if __name__ == '__main__':
+    a = np.random.rand(100, 100)
+    plt = imshow(a, a)
+    # plt.axis('off')
+    # plt.show()
